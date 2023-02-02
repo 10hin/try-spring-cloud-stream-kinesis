@@ -1,0 +1,21 @@
+worker:
+  id: hoge
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        log-in-0:
+          destination: spring-cloud-stream-kinesis
+          group: spring-cloud-stream-kinesis-group
+          content-type: text/plain
+      kinesis:
+        binder:
+          checkpoint:
+            table: spring-cloud-stream-kinesis-metadata-store
+          locks:
+            table: spring-cloud-stream-kinesis-lock-registry
+        bindings:
+          log-in-0:
+            consumer:
+              workerId: ${worker.id}
